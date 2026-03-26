@@ -4,7 +4,7 @@ pipeline{
     environment{
         IMAGE_NAME="1ayaz/springboot123new"
         IMAGE_TAG="latest"
-        EC2_HOST="98.89.24.143"
+        EC2_HOST="ec2-52-23-209-81.compute-1.amazonaws.com"
         EC2_USER="ubuntu"
         SONARQUBE_ENV='sonartest'
     }
