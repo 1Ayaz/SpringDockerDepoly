@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CSE Student Data</title>
+<style>
+ .center {
+        margin: auto;
+        width: 60%;
+        border: 3px solid #73AD21;
+        padding: 5px;
+    }
+      .even-row {
+         color: black;
+         background-color:cyan;
+      }
+      .odd-row {
+         color: blue;
+      }
+    </style>
+
+</head>
+<body>
+<table border=1 class="center">
+<tbody>
+   <tr th:each="dp2,cnt:${info}" th:classappend="${cnt.odd} ? 'odd-row' : 'even-row'">
+        <td th:text="*{cnt.count}" /> 
+          <td th:text="*{dp2.id}" /> 
+        <td th:text="*{dp2.name}" />
+        <td th:text="*{dp2.city}" />
+             <td th:text="*{dp2.college}" />
+              <td th:text="*{dp2.branch}" />            
+    </tr>
+</tbody>
+
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: acetcse
+      MYSQL_DATABASE: devopscse
+    ports:
+      - "3307:3306"
+
+  csespringboot:
+    build: .
+    container_name: cse_container
+    ports:
+      - "8095:8095"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/devopscse
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: acetcse
+    depends_on:
+      - mysqldb
+    restart: always
