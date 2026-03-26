@@ -6,7 +6,7 @@ pipeline{
         IMAGE_TAG="latest"
         EC2_HOST="ec2-52-23-209-81.compute-1.amazonaws.com"
         EC2_USER="ubuntu"
-        SONARQUBE_ENV='sonartest'
+        SONARQUBE_ENV='sonarcse'
     }
 
     stages{
