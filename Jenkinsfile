@@ -18,7 +18,7 @@ pipeline{
         }
         stage('Unit Testing'){
             steps{
-                sh 'mvn test'
+                bat 'mvn test'
             }
             post{
                 always{
@@ -29,20 +29,20 @@ pipeline{
         stage('SonarQube Analysis'){
             steps{
                 withSonarQubeEnv("${SONARQUBE_ENV}"){
-                    sh 'mvn clean verify sonar:sonar'
+                    bat 'mvn clean verify sonar:sonar'
                 }
             }
         }
 
         stage('build jar'){
             steps{
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('build docker image'){
             steps{
-                sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
+                bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG% ."
             }
         }
 
@@ -54,9 +54,9 @@ pipeline{
                     passwordVariable: 'DOCKER_PASS'
                 )]){
 
-                    sh '''
-                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                        docker push $IMAGE_NAME:$IMAGE_TAG
+                    bat '''
+                        echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
+                        docker push %IMAGE_NAME%:%IMAGE_TAG%
                     '''
                 }
             }
@@ -65,16 +65,8 @@ pipeline{
         stage('Deploy to EC2'){
             steps{
                 sshagent(['cse-server-2']){
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST '
-
-                        sudo docker stop springboot-container1 || true
-                        sudo docker rm springboot-container1 || true
-
-                        sudo docker pull 1ayaz/springboot123new:latest
-
-                        sudo docker run -d -p 8095:8095 --name springboot-container1 1ayaz/springboot123new:latest
-                        '
+                    bat '''
+                        ssh -o StrictHostKeyChecking=no %EC2_USER%@%EC2_HOST% "sudo docker stop springboot-container1 || true && sudo docker rm springboot-container1 || true && sudo docker pull 1ayaz/springboot123new:latest && sudo docker run -d -p 8095:8095 --name springboot-container1 1ayaz/springboot123new:latest"
                     '''
                 }
             }
