@@ -1,5 +1,5 @@
 pipeline{
-    agent{label "cse-new-docker"}
+    agent any
 
     environment{
         IMAGE_NAME="1ayaz/springboot123new"
