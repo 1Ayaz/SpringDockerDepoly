@@ -13,7 +13,7 @@ pipeline{
 
         stage('clone code'){
             steps{
-                git "https://github.com/1Ayaz/SpringDockerDepoly.git"
+                git branch: 'main', url: "https://github.com/1Ayaz/SpringDockerDepoly.git"
             }
         }
         stage('Unit Testing'){
